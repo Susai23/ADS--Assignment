@@ -1,0 +1,68 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# read the cash management file into data frame
+df = pd.read_csv(r"C:\Users\hp\Downloads\20230816Rolling12MonthsofCashReceiptsBrokenDownbyMonth1+.csv").dropna().head(8)
+
+#  Extract the year from the InvoiceMonth column
+df['InvoiceMonth'] = df['InvoiceMonth'].str.split('-').str[0]
+
+# Create a line plot for MeatIndustryCash and GovernmentCash
+def lineplot(df):
+    """
+    Create a line plot to visualize the values of Meat Industry Cash and Government Cash.
+    
+    Parameters:
+    df: input dataframe with columns 'InvoiceMonth', 'MeatIndustryCash' and 'GovernmentCash'.
+    
+    """
+    plt.figure(figsize=(12, 6))
+    plt.plot(df['InvoiceMonth'], df['MeatIndustryCash'], label='Meat Industry Cash')
+    plt.plot(df['InvoiceMonth'], df['GovernmentCash'], label='Government Cash')
+    plt.xlabel("Invoice Year")
+    plt.ylabel("Cash Amount")
+    plt.title("Meat Industry and Government Cash Over Years")
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+# Create a bar chart for  Meat Industry Cash and Government Cash
+def barplot(df):
+    """
+    Create a bar chart to compare Meat Industry Cash and Government Cash for each year.
+    
+    Parameters:
+    df: input dataframe with columns 'InvoiceMonth', 'MeatIndustryCash' and 'GovernmentCash'.
+    
+    """
+    plt.figure(figsize=(8, 4))
+    plt.bar(df['InvoiceMonth'], df['MeatIndustryCash'], label='Meat Industry Cash & Government Cash', color='blue', width = 0.2)
+    plt.bar(df['InvoiceMonth'], df['GovernmentCash'], color='blue', width = 0.2)
+    plt.xlabel("Invoice Year")
+    plt.ylabel("Cash Amount")
+    plt.title("Yearly Cash Breakdown")
+    plt.legend()
+    plt.show()
+
+# Create a Scatter Plot for Radiological Cash and Misc And Milk Industry Cash  
+def scatterplot(df):
+    """
+    Create a scatter plot to visualize the difference between Radiological Cash and Misc And Milk Industry Cash
+    
+    Parameters:
+    df: input dataframe with columns 'InvoiceMonth', 'RadiologicalCash', and 'MiscAndMilkIndustryCash'.
+    
+    """
+    plt.figure(figsize=(10, 5))
+    plt.scatter(df['InvoiceMonth'], df['RadiologicalCash'], label='Radiological Cash', color='blue')
+    plt.scatter(df['InvoiceMonth'], df['MiscAndMilkIndustryCash'], label='Misc And Milk Industry Cash', color='red')
+    plt.xlabel('Invoice Year')
+    plt.ylabel('Cash Amount')
+    plt.title('Radiological and Misc and Milk Industry Cash Difference')
+    plt.legend()
+    plt.show()
+
+# Call the plotting functions with the provided DataFrame     
+lineplot(df)
+barplot(df)
+scatterplot(df)
